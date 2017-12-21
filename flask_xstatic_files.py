@@ -20,7 +20,7 @@ Tiny flask extionsion to serve xstatic files
 
 import os
 from flask import current_app, abort
-from flask.helpers import send_file
+from flask.helpers import send_from_directory
 import xstatic.main
 
 # Find the stack on which we want to store the sqlalchemy session.
@@ -89,7 +89,7 @@ class XStaticFiles(object):
         return self.xsf[module].url_for(path)
 
     def serve(self, module, path):
-        return send_file(os.path.join(self.xsf[module].base_dir, path))
+        return send_from_directory(self.xsf[module].base_dir, path)
 
     def serve_or_404(self, module, path):
         try:
