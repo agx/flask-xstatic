@@ -32,6 +32,13 @@ except ImportError:
     from flask import _request_ctx_stack as stack
 
 
+try:
+    FileNotFoundError
+except NameError:
+    # Python2
+    FileNotFoundError = IOError
+
+
 class XStaticFiles(object):
 
     def __init__(self, app=None):
