@@ -15,7 +15,7 @@ use::
     app = Flask(__name__)
     app.config.from_object(__name__)
     app.config.update(dict(
-        XSTATIC_MODULES="bootstrap_scss,jquery",
+        XSTATIC_MODULES="jquery,d3",
     ))
     xstaticfiles = XStaticFiles(app)
 

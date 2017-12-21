@@ -4,6 +4,8 @@
 \#*#
 .#*
 
+.tox/
+.cache/
 *.egg-info/
 build/
 dist/
