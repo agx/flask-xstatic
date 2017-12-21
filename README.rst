@@ -1,6 +1,9 @@
 Flask-XStatic
 =============
 
+.. image:: https://travis-ci.org/agx/flask-xstatic.svg?branch=master
+    :target: https://travis-ci.org/agx/flask-xstatic
+
 A flask extionsion to serve xstatic files. Can be useful if you don't use an
 asset pipeline and server e.g. xstatic packaged javascript files directly.
 
