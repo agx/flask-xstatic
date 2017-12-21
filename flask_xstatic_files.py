@@ -67,29 +67,29 @@ class XStaticFiles(object):
         pkg = __import__('xstatic.pkg', fromlist=modules)
         url = current_app.config['XSTATIC_ROOT']
         proto = current_app.config['XSTATIC_PROTO']
-        xss = {}
+        xsf = {}
         for name in modules:
             mod = getattr(pkg, name)
             xs = xstatic.main.XStatic(mod, root_url=url, protocol=proto)
-            xss[xs.name] = xs
-        return xss
+            xsf[xs.name] = xs
+        return xsf
 
     def teardown(self, exception):
         pass
 
     @property
-    def xss(self):
+    def xsf(self):
         ctx = stack.top
         if ctx is not None:
-            if not hasattr(ctx, 'xss'):
-                ctx.xss = self._load()
-            return ctx.xss
+            if not hasattr(ctx, 'xsf'):
+                ctx.xsf = self._load()
+            return ctx.xsf
 
     def url_for(self, module, path):
-        return self.xss[module].url_for(path)
+        return self.xsf[module].url_for(path)
 
     def serve(self, module, path):
-        return send_file(os.path.join(self.xss[module].base_dir, path))
+        return send_file(os.path.join(self.xsf[module].base_dir, path))
 
     def serve_or_404(self, module, path):
         try:

@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 # vim: set fileencoding=utf-8 :
 """
-Flask-XStatic
--------------
+Flask-XStatic-Files
+-------------------
 
 Make using xstatic files simple
 """
@@ -15,15 +15,15 @@ def readme():
 
 
 setup(
-    name='Flask-XStatic',
+    name='Flask-XStatic-Files',
     version='0.0.1',
-    url='http://github.com/agx/flask-xstatic',
+    url='http://github.com/agx/flask-xstatic-files',
     license='LGPLv3+',
     author='Guio Günther',
     author_email='agx@sigxcpu.org',
     description='Easily use XStatic files in flask',
     long_description=readme(),
-    py_modules=['flask_xstatic'],
+    py_modules=['flask_xstatic_files'],
     zip_safe=False,
     include_package_data=True,
     platforms='any',
