@@ -1,5 +1,5 @@
-Flask-XStatic
-=============
+Flask-XStatic-Files
+===================
 
 .. image:: https://travis-ci.org/agx/flask-xstatic-files.svg?branch=master
     :target: https://travis-ci.org/agx/flask-xstatic-files
