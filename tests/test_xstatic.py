@@ -7,12 +7,24 @@ def test_url_for(app):
         assert xsf.url_for('jquery', 'jquery.min.js') == '/xstatic/jquery/jquery.min.js'
 
 
-def test_serve(app):
-    xsf = fx.XStaticFiles(app)
+def test_init_string(app):
+    with app.test_request_context():
+        app.config['XSTATIC_MODULES'] = 'jquery,d3'
+        xsf = fx.XStaticFiles(app)
+        assert 2 == len(xsf.modules)
+        assert ['d3', 'jquery'] == sorted(xsf.modules.keys())
 
-    @app.route('/xstatic/<module>/<path:filename>')
-    def xstatic(module, filename):
-        return xsf.serve_or_404(module, filename)
+
+def test_init_list(app):
+    with app.test_request_context():
+        app.config['XSTATIC_MODULES'] = ['jquery', 'd3']
+        xsf = fx.XStaticFiles(app)
+        assert 2 == len(xsf.modules)
+        assert ['d3', 'jquery'] == sorted(xsf.modules.keys())
+
+
+def test_serve(app):
+    fx.XStaticFiles(app)
 
     c = app.test_client()
     resp = c.get('/xstatic/jquery/exist')

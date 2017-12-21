@@ -18,7 +18,6 @@
 Tiny flask extionsion to serve xstatic files
 """
 
-import os
 from flask import current_app, abort
 from flask.helpers import send_from_directory
 import xstatic.main
@@ -59,26 +58,34 @@ class XStaticFiles(object):
 
         self.app.jinja_env.globals['xstatic_url_for'] = self.url_for
 
+        @app.route('/xstatic/<module>/<path:filename>')
+        def xstatic(module, filename):
+            return self.serve_or_404(module, filename)
+
     def _load(self):
         modules = current_app.config['XSTATIC_MODULES']
         if not modules:
             return {}
-        modules = modules.split(',')
+
+        # Allow for comma separated or list
+        if isinstance(modules, str):
+            modules = modules.split(',')
+
         pkg = __import__('xstatic.pkg', fromlist=modules)
         url = current_app.config['XSTATIC_ROOT']
         proto = current_app.config['XSTATIC_PROTO']
-        xsf = {}
+        loaded_modules = {}
         for name in modules:
             mod = getattr(pkg, name)
             xs = xstatic.main.XStatic(mod, root_url=url, protocol=proto)
-            xsf[xs.name] = xs
-        return xsf
+            loaded_modules[xs.name] = xs
+        return loaded_modules
 
     def teardown(self, exception):
         pass
 
     @property
-    def xsf(self):
+    def modules(self):
         ctx = stack.top
         if ctx is not None:
             if not hasattr(ctx, 'xsf'):
@@ -86,10 +93,10 @@ class XStaticFiles(object):
             return ctx.xsf
 
     def url_for(self, module, path):
-        return self.xsf[module].url_for(path)
+        return self.modules[module].url_for(path)
 
     def serve(self, module, path):
-        return send_from_directory(self.xsf[module].base_dir, path)
+        return send_from_directory(self.modules[module].base_dir, path)
 
     def serve_or_404(self, module, path):
         try:
