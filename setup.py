@@ -16,7 +16,7 @@ def readme():
 
 setup(
     name='Flask-XStatic-Files',
-    version='0.0.1',
+    version='0.0.2',
     url='http://github.com/agx/flask-xstatic-files',
     license='LGPLv3+',
     author='Guio Günther',
