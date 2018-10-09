@@ -56,7 +56,7 @@ class XStaticFiles(object):
         else:
             app.teardown_request(self.teardown)
 
-        self.app.jinja_env.globals['xstatic_url_for'] = self.url_for
+        app.jinja_env.globals['xstatic_url_for'] = self.url_for
 
         @app.route('/xstatic/<module>/<path:filename>')
         def xstatic(module, filename):
